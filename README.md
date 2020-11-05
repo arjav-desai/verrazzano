@@ -63,3 +63,4 @@ See the `./chart/values.yaml` file for the full list of configurable parameters 
 ## More Information
 
 For more detailed [installation instructions](./install/README.md), see the `install` directory.
+
