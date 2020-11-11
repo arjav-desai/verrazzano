@@ -26,17 +26,14 @@ function install_nginx_ingress_controller()
     ingress_type=$(get_config_value ".ingress.type")
 
     local EXTRA_NGINX_ARGUMENTS=""
-    local patch_service_spec=""
     local extra_install_args=""
     local extra_install_args_len=0
     local param_name=""
     local param_value=""
     if [ "$ingress_type" == "LoadBalancer" ]; then
-      # Get any patch for the service and deployment specs
-      patch_service_spec="$(get_config_value '.ingress.verrazzano.patchServiceSpec')"
       # Handle any additional NGINX install args - since NGINX is for Verrazzano system Ingress,
-      # these should be in .ingress.verrazzano.extraInstallArgs[]
-      extra_install_args=($(get_config_array ".ingress.verrazzano.extraInstallArgs[]"))
+      # these should be in .ingress.verrazzano.nginxInstallArgs[]
+      extra_install_args=($(get_config_array ".ingress.verrazzano.nginxInstallArgs[]")) || return 1
       if [ ${#extra_install_args[@]} -ne 0 ]; then
         for arg in "${extra_install_args[@]}"; do
           param_name=$(echo "$arg" | jq -r '.name')
@@ -45,15 +42,6 @@ function install_nginx_ingress_controller()
             EXTRA_NGINX_ARGUMENTS="$EXTRA_NGINX_ARGUMENTS --set $param_name=$param_value"
           fi
         done
-      fi
-
-      # Handle any external IPs specified for Verrazzano Ingress - this may exist when an
-      # external LB is used
-      local additional_external_ips=($(get_config_array ".ingress.verrazzano.additionalExternalIPs[]"))
-      local additional_external_ips_len=${#additional_external_ips[@]}
-      if [ $additional_external_ips_len -ne 0 ]; then
-        printf -v joined '%s,' "${additional_external_ips[@]}"
-        EXTRA_NGINX_ARGUMENTS=$EXTRA_NGINX_ARGUMENTS" --set controller.service.externalIPs={"${joined%,}"}"
       fi
     fi #end if ingress_type is LoadBalancer
 
@@ -74,10 +62,6 @@ function install_nginx_ingress_controller()
       ${EXTRA_NGINX_ARGUMENTS} \
       --timeout 15m0s \
       --wait
-
-    if [ ! -z "${patch_service_spec}" ]; then
-      kubectl patch service -n ingress-nginx ingress-controller-nginx-ingress-controller -p "${patch_service_spec}"
-    fi
 }
 
 function setup_cert_manager_crd() {
