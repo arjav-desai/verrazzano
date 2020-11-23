@@ -9,7 +9,7 @@ nodes:
       kind: InitConfiguration
       nodeRegistration:
         kubeletExtraArgs:
-          node-labels: "ingress-ready=true"
+          node-labels: "ingress-ready=yes"
           authorization-mode: "AlwaysAllow"
     extraPortMappings:
       - containerPort: 80
