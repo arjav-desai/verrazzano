@@ -4,6 +4,7 @@
 install/build/
 uninstall/build/
 uninstall/uninstall-steps/build/
+examples/**/build/
 .idea/
 *.iml
 build/_output
