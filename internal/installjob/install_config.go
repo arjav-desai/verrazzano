@@ -13,7 +13,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"strconv"
 
-	installv1alpha1 "github.com/verrazzano/verrazzano-platform-operator/api/v1alpha1"
+	installv1alpha1 "github.com/verrazzano/verrazzano/api/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 )

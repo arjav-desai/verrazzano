@@ -2,7 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 domain: verrazzano.io
-repo: github.com/verrazzano/verrazzano-platform-operator
+repo: github.com/verrazzano/verrazzano
 resources:
 - group: install
   kind: Verrazzano
