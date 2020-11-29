@@ -28,7 +28,8 @@
             },
             {
                "name": "controller.nodeSelector.ingress-ready",
-               "value": "yes"
+               "value": "true",
+               "setString": "true"
             },
             {
                "name": "controller.tolerations[0].key",
