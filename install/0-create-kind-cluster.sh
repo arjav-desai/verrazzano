@@ -9,7 +9,7 @@ set -u
 
 . $SCRIPT_DIR/logging.sh
 
-KIND_IMAGE="kindest/node:v1.16.9@sha256:7175872357bc85847ec4b1aba46ed1d12fa054c83ac7a8a11f5c268957fd5765"
+KIND_IMAGE="kindest/node:v1.17.0@sha256:9512edae126da271b66b990b6fff768fbb7cd786c7d39e86bdf55906352fdf62"
 
 command -v kind >/dev/null 2>&1 || {
     consoleerr "kind is required but cannot be found on the path";
